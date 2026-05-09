@@ -118,7 +118,7 @@ if [ -n "${LATEST:-}" ]; then
   echo
   echo "--- per-marker counts (only home-marker should be > 0) ---"
   for m in home-marker repo-root-marker repo-copilot-marker repo-github-copilot-marker; do
-    n=$(grep -cE "$m" "$LATEST" 2>/dev/null || echo 0)
+    n=$(grep -E "$m" "$LATEST" 2>/dev/null | wc -l)
     echo "  $m: $n"
   done | tee "$OUT/05-marker-counts.txt"
 fi
@@ -127,8 +127,8 @@ echo
 echo "=========================================="
 echo "Step 6 — Verdict"
 echo "=========================================="
-HOME_HITS=$(grep -cE "home-marker" "${LATEST:-/dev/null}" 2>/dev/null || echo 0)
-REPO_HITS=$(grep -cE "repo-(root|copilot|github-copilot)-marker" "${LATEST:-/dev/null}" 2>/dev/null || echo 0)
+HOME_HITS=$(grep -E "home-marker" "${LATEST:-/dev/null}" 2>/dev/null | wc -l)
+REPO_HITS=$(grep -E "repo-(root|copilot|github-copilot)-marker" "${LATEST:-/dev/null}" 2>/dev/null | wc -l)
 {
   if [ "$HOME_HITS" -gt 0 ] && [ "$REPO_HITS" -eq 0 ]; then
     echo "PASS — hypothesis confirmed:"
